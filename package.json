@@ -1,0 +1,92 @@
+{
+  "name": "@major-tanya/itty-compression",
+  "version": "0.1.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "description": "A compression middleware for use with itty-router",
+  "scripts": {
+    "lint": "eslint src",
+    "format": "prettier src --write src",
+    "prebuild": "rimraf dist && mkdir dist",
+    "build": "rollup -c -m",
+    "test": "vitest --coverage --reporter verbose",
+    "test:once": "vitest run",
+    "coverage": "vitest run --coverage",
+    "prerelease": "npm run build && npm run test:once",
+    "release:patch": "npm version patch --sign-git-tag=true",
+    "release:minor": "npm version minor --sign-git-tag=true",
+    "release:major": "npm version major --sign-git-tag=true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MajorTanya/itty-compression.git"
+  },
+  "keywords": [
+    "itty-router",
+    "compression",
+    "brotli",
+    "gzip"
+  ],
+  "author": "MajorTanya <github@majortanya.eu>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MajorTanya/itty-compression/issues"
+  },
+  "homepage": "https://github.com/MajorTanya/itty-compression#readme",
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.5",
+    "@types/node": "^20.8.6",
+    "@typescript-eslint/eslint-plugin": "^6.7.5",
+    "@typescript-eslint/parser": "^6.7.5",
+    "@vercel/ncc": "^0.38.0",
+    "@vitest/coverage-v8": "^0.34.6",
+    "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
+    "fs-extra": "^11.1.1",
+    "globby": "^13.2.2",
+    "husky": "^8.0.3",
+    "is-ci": "^3.0.1",
+    "prettier": "^3.0.3",
+    "rimraf": "^5.0.5",
+    "rollup": "^4.1.0",
+    "rollup-plugin-bundle-size": "^1.0.3",
+    "rollup-plugin-copy": "^3.5.0",
+    "tslib": "^2.6.2",
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.6"
+  },
+  "type": "module",
+  "files": [
+    "dist/**/*"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./brotliCompression": {
+      "import": "./dist/brotliCompression.mjs",
+      "require": "./dist/brotliCompression.cjs",
+      "types": "./dist/brotliCompression.d.ts"
+    },
+    "./deflateCompression": {
+      "import": "./dist/deflateCompression.mjs",
+      "require": "./dist/deflateCompression.cjs",
+      "types": "./dist/deflateCompression.d.ts"
+    },
+    "./gzipCompression": {
+      "import": "./dist/gzipCompression.mjs",
+      "require": "./dist/gzipCompression.cjs",
+      "types": "./dist/gzipCompression.d.ts"
+    },
+    "./negotiatedCompression": {
+      "import": "./dist/negotiatedCompression.mjs",
+      "require": "./dist/negotiatedCompression.cjs",
+      "types": "./dist/negotiatedCompression.d.ts"
+    }
+  }
+}
