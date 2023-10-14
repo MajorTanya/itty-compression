@@ -1,7 +1,8 @@
 # itty-compression
 
 [![Coverage Status](https://coveralls.io/repos/github/MajorTanya/itty-compression/badge.svg?branch=main)](https://coveralls.io/github/MajorTanya/itty-compression?branch=main)
-![Lint Status](https://img.shields.io/github/actions/workflow/status/MajorTanya/itty-compression/testing.yml?label=lint)
+![Lint Status](https://img.shields.io/github/actions/workflow/status/MajorTanya/itty-compression/lint.yml?label=lint)
+![Test Status](https://img.shields.io/github/actions/workflow/status/MajorTanya/itty-compression/testing.yml?label=tests)
 ![GitHub issues](https://img.shields.io/github/issues/MajorTanya/itty-compression)
 ![Package version](https://img.shields.io/github/package-json/version/MajorTanya/itty-compression)
 
