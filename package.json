@@ -1,6 +1,6 @@
 {
   "name": "@major-tanya/itty-compression",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -34,6 +34,9 @@
     "url": "https://github.com/MajorTanya/itty-compression/issues"
   },
   "homepage": "https://github.com/MajorTanya/itty-compression#readme",
+  "engines": {
+    "node": ">=18"
+  },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",

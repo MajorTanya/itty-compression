@@ -55,6 +55,8 @@ compressed.
 
 ## How to use
 
+**`itty-compression` directly depends on Node's zlib via importing `node:zlib`.**
+
 Install with `npm install @major-tanya/itty-compression` (or your favoured alternative to npm).
 
 Once installed, pick your compression algorithm, or use the flexible `negotiatedCompression` middleware.
