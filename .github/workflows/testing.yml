@@ -11,14 +11,17 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [ 18.x, 20.x ]
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node v20.x
+      - name: Setup Node v${{ matrix.version }}
         uses: actions/setup-node@v3
         with:
-          node-version: 20.x
+          node-version: ${{ matrix.version }}
           cache: "npm"
 
       - name: Clean Install Dependencies
