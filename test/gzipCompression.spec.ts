@@ -174,6 +174,46 @@ describe('gzipCompression with intermediate Response', () => {
     expect(output.headers.get(VARY)).to.include('x-funky');
     expect(output.headers.get(VARY)).to.include(ACCEPT_ENCODING);
   });
+
+  it('should fall back to status and status text of intermediate Response if neither is provided as options', async () => {
+    const request = new Request('https://example.com');
+    request.headers.set(ACCEPT_ENCODING, GZIP);
+
+    // eslint-disable-next-line quotes
+    const input = new Response('Test Response', { status: 418, statusText: "I'm a teapot" });
+
+    const output = await gzipCompression(request, input);
+
+    expect(output).toBeInstanceOf(Response);
+    expect(output).not.toBe(input);
+    expect(output.headers.get(CONTENT_ENCODING)).toStrictEqual(GZIP);
+    expect(output.status).toStrictEqual(input.status);
+    expect(output.status).toStrictEqual(418);
+    expect(output.statusText).toStrictEqual(input.statusText);
+    // eslint-disable-next-line quotes
+    expect(output.statusText).toStrictEqual("I'm a teapot");
+  });
+
+  it('should properly set status and status text if provided as options and override the values from intermediate Response', async () => {
+    const request = new Request('https://example.com');
+    request.headers.set(ACCEPT_ENCODING, GZIP);
+
+    // eslint-disable-next-line quotes
+    const input = new Response('Test Response', { status: 418, statusText: "I'm a teapot" });
+    const options = { status: 202, statusText: 'Accepted' };
+
+    const output = await gzipCompression(request, input, options);
+
+    expect(output).toBeInstanceOf(Response);
+    expect(output).not.toBe(input);
+    expect(output.headers.get(CONTENT_ENCODING)).toStrictEqual(GZIP);
+    expect(output.status).not.toStrictEqual(input.status);
+    expect(output.status).toStrictEqual(options.status);
+    expect(output.status).toStrictEqual(202);
+    expect(output.statusText).not.toStrictEqual(input.statusText);
+    expect(output.statusText).toStrictEqual(options.statusText);
+    expect(output.statusText).toStrictEqual('Accepted');
+  });
 });
 
 describe('gzipCompression with text input', () => {

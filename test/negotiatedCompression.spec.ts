@@ -211,6 +211,44 @@ describe('negotiatedCompression with intermediate Response', () => {
     expect(output.headers.get(CONTENT_ENCODING)).toStrictEqual(BROTLI);
     expect(output.headers.get('X-Custom-Header')).toStrictEqual('x-funky');
   });
+
+  it('should fall back to status and status text of intermeditate Response if neither is provided as options', async () => {
+    const request = new Request('https://example.com');
+    request.headers.set(ACCEPT_ENCODING, BROTLI);
+
+    const input = new Response('Test Response', { status: 202, statusText: 'Accepted' });
+
+    const output = await negotiatedCompression(request, input);
+
+    expect(output).toBeInstanceOf(Response);
+    expect(output).not.toBe(input);
+    expect(output.headers.get(CONTENT_ENCODING)).toStrictEqual(BROTLI);
+    expect(output.status).toStrictEqual(input.status);
+    expect(output.status).toStrictEqual(202);
+    expect(output.statusText).toStrictEqual(input.statusText);
+    expect(output.statusText).toStrictEqual('Accepted');
+  });
+
+  it('should properly set status and status text if provided as options and override the values from intermediate Response', async () => {
+    const request = new Request('https://example.com');
+    request.headers.set(ACCEPT_ENCODING, BROTLI);
+
+    // eslint-disable-next-line quotes
+    const input = new Response('Test Response', { status: 418, statusText: "I'm a teapot" });
+    const options = { status: 202, statusText: 'Accepted' };
+
+    const output = await negotiatedCompression(request, input, options);
+
+    expect(output).toBeInstanceOf(Response);
+    expect(output).not.toBe(input);
+    expect(output.headers.get(CONTENT_ENCODING)).toStrictEqual(BROTLI);
+    expect(output.status).not.toStrictEqual(input.status);
+    expect(output.status).toStrictEqual(options.status);
+    expect(output.status).toStrictEqual(202);
+    expect(output.statusText).not.toStrictEqual(input.statusText);
+    expect(output.statusText).toStrictEqual(options.statusText);
+    expect(output.statusText).toStrictEqual('Accepted');
+  });
 });
 
 describe('negotiatedCompression with text input', () => {

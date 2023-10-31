@@ -45,7 +45,11 @@ export const handleCompression = async (
       if (!(newHeaders.get(header) ?? '').includes(value)) newHeaders.append(header, value);
     }
 
-    return new Response(compressor(body), { headers: newHeaders, ...rest });
+    return new Response(compressor(body), {
+      headers: newHeaders,
+      status: rest.status ?? input.status,
+      statusText: rest.statusText ?? input.statusText,
+    });
   }
 
   if (typeof input !== 'string' && typeof input !== 'object') {
