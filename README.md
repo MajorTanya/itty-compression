@@ -27,12 +27,12 @@ optimisations always on the table.
 
 Current sizes are:
 
-| middleware              | size                                                                                                            |
-|-------------------------|-----------------------------------------------------------------------------------------------------------------|
-| `brotliCompression`     | ![brotliCompression](https://deno.bundlejs.com/badge?q=@major-tanya/itty-compression/brotliCompression)         |
-| `gzipCompression`       | ![gzipCompression](https://deno.bundlejs.com/badge?q=@major-tanya/itty-compression/gzipCompression)             |
-| `deflateCompression`    | ![deflateCompression](https://deno.bundlejs.com/badge?q=@major-tanya/itty-compression/deflateCompression)       |
-| `negotiatedCompression` | ![negotiatedCompression](https://deno.bundlejs.com/badge?q=@major-tanya/itty-compression/negotiatedCompression) |
+| middleware              | size                                                                                                                                                                                           |
+|-------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `brotliCompression`     | [![brotliCompression](https://deno.bundlejs.com/badge?q=@major-tanya/itty-compression/brotliCompression)](https://bundlejs.com/?q=@major-tanya/itty-compression/brotliCompression)             |
+| `gzipCompression`       | [![gzipCompression](https://deno.bundlejs.com/badge?q=@major-tanya/itty-compression/gzipCompression)](https://bundlejs.com/?q=@major-tanya/itty-compression/gzipCompression)                   |
+| `deflateCompression`    | [![deflateCompression](https://deno.bundlejs.com/badge?q=@major-tanya/itty-compression/deflateCompression)](https://bundlejs.com/?q=@major-tanya/itty-compression/deflateCompression)          |
+| `negotiatedCompression` | [![negotiatedCompression](https://deno.bundlejs.com/badge?q=@major-tanya/itty-compression/negotiatedCompression)](https://bundlejs.com/?q=@major-tanya/itty-compression/negotiatedCompression) |
 
 ### Typed
 
