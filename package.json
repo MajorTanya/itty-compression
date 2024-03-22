@@ -16,7 +16,8 @@
     "prerelease": "npm run build && npm run test:once",
     "release:patch": "npm version patch --sign-git-tag=true",
     "release:minor": "npm version minor --sign-git-tag=true",
-    "release:major": "npm version major --sign-git-tag=true"
+    "release:major": "npm version major --sign-git-tag=true",
+    "prepare": "is-ci || husky"
   },
   "repository": {
     "type": "git",
@@ -50,7 +51,7 @@
     "eslint-config-prettier": "^9.1.0",
     "fs-extra": "^11.2.0",
     "globby": "^13.2.2",
-    "husky": "^8.0.3",
+    "husky": "^9.0.11",
     "is-ci": "^3.0.1",
     "prettier": "^3.2.4",
     "rimraf": "^5.0.5",
