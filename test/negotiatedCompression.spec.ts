@@ -212,7 +212,7 @@ describe('negotiatedCompression with intermediate Response', () => {
     expect(output.headers.get('X-Custom-Header')).toStrictEqual('x-funky');
   });
 
-  it('should fall back to status and status text of intermeditate Response if neither is provided as options', async () => {
+  it('should fall back to status and status text of intermediate Response if neither is provided as options', async () => {
     const request = new Request('https://example.com');
     request.headers.set(ACCEPT_ENCODING, BROTLI);
 
