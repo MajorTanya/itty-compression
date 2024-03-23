@@ -14,9 +14,9 @@
     "test:once": "vitest run",
     "coverage": "vitest run --coverage",
     "prerelease": "npm run build && npm run test:once",
-    "release:patch": "npm version patch --sign-git-tag=true",
-    "release:minor": "npm version minor --sign-git-tag=true",
-    "release:major": "npm version major --sign-git-tag=true",
+    "release:patch": "npm version patch --sign-git-tag=true -m \"Release @major-tanya/itty-compression v%s\"",
+    "release:minor": "npm version minor --sign-git-tag=true -m \"Release @major-tanya/itty-compression v%s\"",
+    "release:major": "npm version major --sign-git-tag=true -m \"Release @major-tanya/itty-compression v%s\"",
     "prepare": "is-ci || husky"
   },
   "repository": {
