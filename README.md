@@ -4,7 +4,7 @@
 ![Lint Status](https://img.shields.io/github/actions/workflow/status/MajorTanya/itty-compression/lint.yml?label=lint)
 ![Test Status](https://img.shields.io/github/actions/workflow/status/MajorTanya/itty-compression/testing.yml?label=tests)
 ![GitHub issues](https://img.shields.io/github/issues/MajorTanya/itty-compression)
-![Package version](https://img.shields.io/github/package-json/version/MajorTanya/itty-compression)
+[![Package version](https://img.shields.io/npm/v/@major-tanya/itty-compression)](https://www.npmjs.com/package/@major-tanya/itty-compression)
 
 A work-in-progress, proof-of-concept compression middleware to provide Response Compression for use
 in [itty-router](https://github.com/kwhitley/itty-router) projects.
@@ -14,6 +14,35 @@ Probably compatible with a variety of other routers.
 Not recommended for production use.
 
 ## Features
+
+### Your choice of algorithm
+
+`itty-compression` includes:
+
+| Middleware              | Algorithm(s)               |
+|-------------------------|----------------------------|
+| `brotliCompression`     | brotli (br) *only*         |
+| `deflateCompression`    | deflate *only*             |
+| `gzipCompression`       | gzip *only*                |
+| `negotiatedCompression` | brotli (br), gzip, deflate |
+
+#### What is `negotiatedCompression`?
+
+`negotiatedCompression` compares the client's `Accept-Encoding` header against the list of supported encodings (see
+table) and uses the first algorithm both the client and `itty-compression` can agree on. The priority is as follows:
+
+1. brotli (br)
+2. gzip
+3. deflate
+4. no compression
+
+If the client doesn't accept any supported algorithm, the middleware will add the `Vary` header with the
+value `Accept-Encoding` (or append the value if the header already exists) to inform the client of this capability.
+
+As with the other middlewares, the original request object is needed to read the client's `Accept-Encoding` header. If
+the request is not provided, the `Accept-Encoding` header isn't set, or no mutually supported algorithm could be
+determined, this middleware will function as a no-op instead, returning the input with only the `Vary: Accept-Encoding`
+header added.
 
 ### No duplicate compression of Responses.
 
@@ -30,18 +59,13 @@ Current sizes are:
 | middleware              | size                                                                                                                                                                                           |
 |-------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `brotliCompression`     | [![brotliCompression](https://deno.bundlejs.com/badge?q=@major-tanya/itty-compression/brotliCompression)](https://bundlejs.com/?q=@major-tanya/itty-compression/brotliCompression)             |
-| `gzipCompression`       | [![gzipCompression](https://deno.bundlejs.com/badge?q=@major-tanya/itty-compression/gzipCompression)](https://bundlejs.com/?q=@major-tanya/itty-compression/gzipCompression)                   |
 | `deflateCompression`    | [![deflateCompression](https://deno.bundlejs.com/badge?q=@major-tanya/itty-compression/deflateCompression)](https://bundlejs.com/?q=@major-tanya/itty-compression/deflateCompression)          |
+| `gzipCompression`       | [![gzipCompression](https://deno.bundlejs.com/badge?q=@major-tanya/itty-compression/gzipCompression)](https://bundlejs.com/?q=@major-tanya/itty-compression/gzipCompression)                   |
 | `negotiatedCompression` | [![negotiatedCompression](https://deno.bundlejs.com/badge?q=@major-tanya/itty-compression/negotiatedCompression)](https://bundlejs.com/?q=@major-tanya/itty-compression/negotiatedCompression) |
 
 ### Typed
 
 `itty-compression` is entirely written in TypeScript, so it comes with types automatically.
-
-### Currently supported compressible `Content-Type`s:
-
-- `text/plain`
-- `application/json` or `application/json;charset=UTF-8`
 
 ### Currently supported compression algorithms:
 
@@ -60,81 +84,79 @@ compressed.
 
 Install with `npm install @major-tanya/itty-compression` (or your favoured alternative to npm).
 
-Once installed, pick your compression algorithm, or use the flexible `negotiatedCompression` middleware.
+Once installed, pick your compression algorithm, or use the flexible `negotiatedCompression` middleware
+([Your Choice of Algorithm](#your-choice-of-algorithm)).
 
-### `brotliCompression`, `gzipCompression`, `deflateCompression`
+### `itty-router` v5 with `AutoRouter` or `Router`
 
-These middlewares offer only one compression algorithm each (brotli, gzip, and deflate, respectively).
+The freshly released v5 of `itty-router` includes some more batteries-included routers that allow for some more concise
+syntax when using `itty-compression`. Example based on the
+[v5 AutoRouter documentation](https://itty.dev/itty-router/routers/autorouter).
 
-Add your pick as a downstream middleware after invoking `router.handle` as such:
-
-```typescript
-import { brotliCompression } from 'itty-compression';
-// import { deflateCompression } from 'itty-compression';
-// import { gzipCompression } from 'itty-compression';
-import { error, json, Router } from 'itty-router';
-
-const router = Router();
-
-// downstream json middleware handles stringifying
-router.get('/dogs/toto', (request) => {
-  name: 'Toto';
-  breed: 'Cairn Terrier';
-  color: 'black';
-});
-
-export default {
-  fetch: (request, ...args) => router
-    .handle(...args)
-    .then(json)
-    .then(response => brotliCompression(request, response)) // <-- add the compression handler downstream
-    // .then(response => gzipCompression(request, response))
-    // .then(response => deflateCompression(request, response))
-    .catch(error),
-};
-```
-
-It's important to add the original request in order for `itty-compression` to be able to respect the
-client's `Accept-Encoding` header. If the request (or the header) is not provided, the compression middleware will
-function as a no-op, returning the input untouched.
-
-### `negotiatedCompression`
-
-This middleware allows for greater flexibility as to the choice of compression algorithm. It supports all the same
-algorithms available as individual middlewares, but will dynamically select which one is used based solely on the
-client's `Accept-Encoding` header.
-
-The priority goes `brotli` > `gzip` > `deflate` > no compression.
+Example: `negotiatedCompression` (replace with your middleware of choice)
 
 ```typescript
 import { negotiatedCompression } from 'itty-compression';
-import { error, json, Router } from 'itty-router';
+import { AutoRouter } from 'itty-router';
 
-const router = Router();
+const router = AutoRouter({ // using batteries-included AutoRouter
+  finally: [negotiatedCompression],
+});
+// const router = Router({ // using the medium Router
+//  // do not forget to add the json handler for the medium Router before the compression middleware
+//  finally: [json, negotiatedCompression],
+// });
+
+// AutoRouter's integrated json formatter handles this automatically
+router.get('/dogs/toto', (request) => ({
+  name: 'Toto',
+  breed: 'Cairn Terrier',
+  color: 'black',
+}));
+
+export default router;
+```
+
+### `itty-router` v5 with `IttyRouter` (also `itty-router` v4)
+
+Example: `negotiatedCompression` (replace with your middleware of choice)
+
+```typescript
+import { negotiatedCompression } from 'itty-compression';
+import { error, IttyRouter, json } from 'itty-router';
+
+// const router = Router(); // only itty-router v4
+const router = IttyRouter(); // only itty-router v5
 
 // downstream json middleware handles stringifying
-router.get('/dogs/toto', (request) => {
-  name: 'Toto';
-  breed: 'Cairn Terrier';
-  color: 'black';
-});
+router.get('/dogs/toto', (request) => ({
+  name: 'Toto',
+  breed: 'Cairn Terrier',
+  color: 'black',
+}));
 
 export default {
   fetch: (request, ...args) => router
-    .handle(...args)
-    .then(json)
-    .then(response => negotiatedCompression(request, response)) // <-- add the compression handler downstream
+    // .handle(...args) // only itty-router v4
+    .fetch(...args) // only itty-router v5
+    .then(json) // <-- do not forget an appropriate handler here or you may encounter problems with itty-compression
+    .then((response) => negotiatedCompression(response, request)) // <-- add the compression handler downstream
     .catch(error),
 };
 ```
 
-As with the other middlewares, the original request object is needed to read the client's `Accept-Encoding` header. If
-the request is not provided, the `Accept-Encoding` header isn't set, or no mutually supported algorithm could be
-determined, this middleware will function as a no-op instead, returning the input untouched.
+Note: It's important to add the original request in order for `itty-compression` to be able to respect the
+client's `Accept-Encoding` header. If the request (or the header) is not provided, the compression middleware will
+function as a no-op, returning the input with only the [Vary header added](#vary-header-setting).
 
 ## Compatibility & Testing
 
-Under construction...
+Known compatible with
+
+- [itty-router v4 & v5](https://github.com/kwhitley/itty-router) (see [How to use](#how-to-use))
+
+Theoretically compatible with any framework/library/router that allows for access to the client request and the
+in-progress response before it is sent to the client and also supports async middleware.
 
 ## Goals
 
@@ -143,7 +165,9 @@ Under construction...
 
 ## TODO
 
-- More appropriate media types
+- [ ] More library/framework compatibility data?
+- [ ] Code golfing
+- [ ] More robust approach to suboptimal inputs
 
 ## Thanks
 
