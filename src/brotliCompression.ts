@@ -1,13 +1,14 @@
-import { ACCEPT_ENCODING, BROTLI, handleCompression } from './util/compressor.js';
+import { handleCompression } from './util/compressor.js';
 import { brotliWrapper } from './util/wrappers.js';
+import { ACCEPT_ENCODING, BROTLI } from './util/constants.js';
 import type { Compression } from './util/types.js';
 
 export const brotliCompression: Compression = async (
   originalRequest: Request,
-  input: Response | any,
+  response: Response,
   options?: ResponseInit,
-): Promise<Response | any> => {
-  if (!originalRequest.headers.get(ACCEPT_ENCODING)?.toLowerCase().includes(BROTLI)) return input;
+): Promise<Response> => {
+  if (!originalRequest.headers.get(ACCEPT_ENCODING)?.toLowerCase().includes(BROTLI)) return response;
 
-  return await handleCompression(BROTLI, brotliWrapper, input, options);
+  return await handleCompression(BROTLI, brotliWrapper, response, options);
 };

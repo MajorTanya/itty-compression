@@ -1,29 +1,28 @@
 import { brotliWrapper, deflateWrapper, gzipWrapper } from './util/wrappers.js';
-import { ACCEPT_ENCODING, handleCompression, SUPPORTED_ENCODINGS } from './util/compressor.js';
-import type { Compression } from './util/types.js';
+import { handleCompression } from './util/compressor.js';
+import { ACCEPT_ENCODING, SUPPORTED_ENCODINGS } from './util/constants.js';
+import type { Compression, Compressor } from './util/types.js';
 
-const COMPRESSIONS: Record<(typeof SUPPORTED_ENCODINGS)[number], (input: any) => Buffer> = {
+const COMPRESSORS: Record<(typeof SUPPORTED_ENCODINGS)[number], Compressor> = {
   br: brotliWrapper,
   gzip: gzipWrapper,
   deflate: deflateWrapper,
-};
+} as const;
 
 export const negotiatedCompression: Compression = async (
   originalRequest: Request,
-  input: Response | any,
+  response: Response,
   options?: ResponseInit,
-): Promise<Response | any> => {
+): Promise<Response> => {
   const acceptedEncodings = originalRequest.headers.get(ACCEPT_ENCODING) ?? '';
 
   const agreed = SUPPORTED_ENCODINGS.find((encoding) => acceptedEncodings.toLowerCase().includes(encoding));
   if (agreed === undefined) {
-    if (input instanceof Response && !(input.headers.get('Vary') ?? '').includes('Accept-Encoding')) {
-      input.headers.append('Vary', 'Accept-Encoding');
+    if (!(response.headers.get('Vary') ?? '').includes('Accept-Encoding')) {
+      response.headers.append('Vary', 'Accept-Encoding');
     }
-    return input;
+    return response;
   }
 
-  const compress = COMPRESSIONS[agreed];
-
-  return await handleCompression(agreed, compress, input, options);
+  return await handleCompression(agreed, COMPRESSORS[agreed], response, options);
 };
