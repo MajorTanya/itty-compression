@@ -10,8 +10,8 @@ const COMPRESSORS: Record<(typeof SUPPORTED_ENCODINGS)[number], Compressor> = {
 } as const;
 
 export const negotiatedCompression: Compression = async (
-  originalRequest: Request,
   response: Response,
+  originalRequest: Request,
   options?: ResponseInit,
 ): Promise<Response> => {
   const acceptedEncodings = originalRequest.headers.get(ACCEPT_ENCODING) ?? '';

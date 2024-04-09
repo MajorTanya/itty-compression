@@ -11,7 +11,7 @@ describe('gzipCompression with intermediate Response', () => {
 
     const input = new Response('Test Response');
 
-    const output = await gzipCompression(request, input);
+    const output = await gzipCompression(input, request);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).toBe(input);
@@ -24,7 +24,7 @@ describe('gzipCompression with intermediate Response', () => {
 
     const input = new Response('Test Response');
 
-    const output = await gzipCompression(request, input);
+    const output = await gzipCompression(input, request);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).toBe(input);
@@ -37,7 +37,7 @@ describe('gzipCompression with intermediate Response', () => {
 
     const input = new Response('Test Response');
 
-    const output = await gzipCompression(request, input);
+    const output = await gzipCompression(input, request);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).toBe(input);
@@ -51,7 +51,7 @@ describe('gzipCompression with intermediate Response', () => {
     const input = new Response('Test Response');
     input.headers.set(CONTENT_ENCODING, 'x-my-compressor');
 
-    const output = await gzipCompression(request, input);
+    const output = await gzipCompression(input, request);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).toBe(input);
@@ -64,7 +64,7 @@ describe('gzipCompression with intermediate Response', () => {
 
     const input = new Response('Test Response');
 
-    const output = await gzipCompression(request, input);
+    const output = await gzipCompression(input, request);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).not.toBe(input);
@@ -78,7 +78,7 @@ describe('gzipCompression with intermediate Response', () => {
 
     const input = new Response('Test Response');
 
-    const output = await gzipCompression(request, input);
+    const output = await gzipCompression(input, request);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).not.toBe(input);
@@ -92,7 +92,7 @@ describe('gzipCompression with intermediate Response', () => {
 
     const input = new Response('Test Response');
 
-    const output = await gzipCompression(request, input);
+    const output = await gzipCompression(input, request);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).not.toBe(input);
@@ -107,7 +107,7 @@ describe('gzipCompression with intermediate Response', () => {
     const input = new Response('Test Response');
     input.headers.set(VARY, 'x-funky');
 
-    const output = await gzipCompression(request, input);
+    const output = await gzipCompression(input, request);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).not.toBe(input);
@@ -123,7 +123,7 @@ describe('gzipCompression with intermediate Response', () => {
     // eslint-disable-next-line quotes
     const input = new Response('Test Response', { status: 418, statusText: "I'm a teapot" });
 
-    const output = await gzipCompression(request, input);
+    const output = await gzipCompression(input, request);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).not.toBe(input);
@@ -143,7 +143,7 @@ describe('gzipCompression with intermediate Response', () => {
     const input = new Response('Test Response', { status: 418, statusText: "I'm a teapot" });
     const options = { status: 202, statusText: 'Accepted' };
 
-    const output = await gzipCompression(request, input, options);
+    const output = await gzipCompression(input, request, options);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).not.toBe(input);
@@ -162,7 +162,7 @@ describe('gzipCompression with intermediate Response', () => {
 
     const input = new Response();
 
-    const output = await gzipCompression(request, input);
+    const output = await gzipCompression(input, request);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).not.toBe(input);
@@ -177,7 +177,7 @@ describe('gzipCompression with intermediate Response', () => {
     const input = new Response(null, { status: 418, statusText: "I'm a teapot" });
 
     const options = { status: 202, statusText: 'Accepted' };
-    const output = await gzipCompression(request, input, options);
+    const output = await gzipCompression(input, request, options);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).not.toBe(input);

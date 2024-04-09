@@ -11,7 +11,7 @@ describe('negotiatedCompression with intermediate Response', () => {
 
     const input = new Response('Test Response');
 
-    const output = await negotiatedCompression(request, input);
+    const output = await negotiatedCompression(input, request);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).toBe(input);
@@ -25,7 +25,7 @@ describe('negotiatedCompression with intermediate Response', () => {
 
     const input = new Response('Test Response');
 
-    const output = await negotiatedCompression(request, input);
+    const output = await negotiatedCompression(input, request);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).toBe(input);
@@ -38,7 +38,7 @@ describe('negotiatedCompression with intermediate Response', () => {
 
     const input = new Response('Test Response');
 
-    const output = await negotiatedCompression(request, input);
+    const output = await negotiatedCompression(input, request);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).not.toBe(input);
@@ -51,7 +51,7 @@ describe('negotiatedCompression with intermediate Response', () => {
 
     const input = new Response('Test Response');
 
-    const output = await negotiatedCompression(request, input);
+    const output = await negotiatedCompression(input, request);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).not.toBe(input);
@@ -64,7 +64,7 @@ describe('negotiatedCompression with intermediate Response', () => {
 
     const input = new Response('Test Response');
 
-    const output = await negotiatedCompression(request, input);
+    const output = await negotiatedCompression(input, request);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).not.toBe(input);
@@ -77,7 +77,7 @@ describe('negotiatedCompression with intermediate Response', () => {
 
     const input = new Response('Test Response');
 
-    const output = await negotiatedCompression(request, input);
+    const output = await negotiatedCompression(input, request);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).not.toBe(input);
@@ -91,7 +91,7 @@ describe('negotiatedCompression with intermediate Response', () => {
     const input = new Response('Test Response');
     input.headers.delete(VARY);
 
-    const output = await negotiatedCompression(request, input);
+    const output = await negotiatedCompression(input, request);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).toBe(input);
@@ -104,7 +104,7 @@ describe('negotiatedCompression with intermediate Response', () => {
 
     const input = new Response('Test Response');
 
-    const output = await negotiatedCompression(request, input);
+    const output = await negotiatedCompression(input, request);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).toBe(input);
@@ -118,7 +118,7 @@ describe('negotiatedCompression with intermediate Response', () => {
     const input = new Response('Test Response');
     input.headers.set(VARY, 'x-funky');
 
-    const output = await negotiatedCompression(request, input);
+    const output = await negotiatedCompression(input, request);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).not.toBe(input);
@@ -134,7 +134,7 @@ describe('negotiatedCompression with intermediate Response', () => {
     const input = new Response('Test Response');
     input.headers.set(VARY, ACCEPT_ENCODING);
 
-    const output = await negotiatedCompression(request, input);
+    const output = await negotiatedCompression(input, request);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).not.toBe(input);
@@ -151,7 +151,7 @@ describe('negotiatedCompression with intermediate Response', () => {
 
     const options = { headers: { [VARY]: ACCEPT_ENCODING } };
 
-    const output = await negotiatedCompression(request, input, options);
+    const output = await negotiatedCompression(input, request, options);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).not.toBe(input);
@@ -167,7 +167,7 @@ describe('negotiatedCompression with intermediate Response', () => {
 
     const options = { headers: { 'X-Custom-Header': 'x-funky' } };
 
-    const output = await negotiatedCompression(request, input, options);
+    const output = await negotiatedCompression(input, request, options);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).not.toBe(input);
@@ -181,7 +181,7 @@ describe('negotiatedCompression with intermediate Response', () => {
 
     const input = new Response('Test Response', { status: 202, statusText: 'Accepted' });
 
-    const output = await negotiatedCompression(request, input);
+    const output = await negotiatedCompression(input, request);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).not.toBe(input);
@@ -200,7 +200,7 @@ describe('negotiatedCompression with intermediate Response', () => {
     const input = new Response('Test Response', { status: 418, statusText: "I'm a teapot" });
     const options = { status: 202, statusText: 'Accepted' };
 
-    const output = await negotiatedCompression(request, input, options);
+    const output = await negotiatedCompression(input, request, options);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).not.toBe(input);
@@ -219,7 +219,7 @@ describe('negotiatedCompression with intermediate Response', () => {
 
     const input = new Response();
 
-    const output = await negotiatedCompression(request, input);
+    const output = await negotiatedCompression(input, request);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).not.toBe(input);
@@ -234,7 +234,7 @@ describe('negotiatedCompression with intermediate Response', () => {
     const input = new Response(null, { status: 418, statusText: "I'm a teapot" });
 
     const options = { status: 202, statusText: 'Accepted' };
-    const output = await negotiatedCompression(request, input, options);
+    const output = await negotiatedCompression(input, request, options);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).not.toBe(input);
@@ -253,7 +253,7 @@ describe('negotiatedCompression with intermediate Response', () => {
 
     const input = new Response();
 
-    const output = await negotiatedCompression(request, input);
+    const output = await negotiatedCompression(input, request);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).not.toBe(input);
@@ -268,7 +268,7 @@ describe('negotiatedCompression with intermediate Response', () => {
     const input = new Response(null, { status: 418, statusText: "I'm a teapot" });
 
     const options = { status: 202, statusText: 'Accepted' };
-    const output = await negotiatedCompression(request, input, options);
+    const output = await negotiatedCompression(input, request, options);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).not.toBe(input);
@@ -287,7 +287,7 @@ describe('negotiatedCompression with intermediate Response', () => {
 
     const input = new Response();
 
-    const output = await negotiatedCompression(request, input);
+    const output = await negotiatedCompression(input, request);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).not.toBe(input);
@@ -302,7 +302,7 @@ describe('negotiatedCompression with intermediate Response', () => {
     const input = new Response(null, { status: 418, statusText: "I'm a teapot" });
 
     const options = { status: 202, statusText: 'Accepted' };
-    const output = await negotiatedCompression(request, input, options);
+    const output = await negotiatedCompression(input, request, options);
 
     expect(output).toBeInstanceOf(Response);
     expect(output).not.toBe(input);

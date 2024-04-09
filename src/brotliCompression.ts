@@ -4,8 +4,8 @@ import { ACCEPT_ENCODING, BROTLI } from './util/constants.js';
 import type { Compression } from './util/types.js';
 
 export const brotliCompression: Compression = async (
-  originalRequest: Request,
   response: Response,
+  originalRequest: Request,
   options?: ResponseInit,
 ): Promise<Response> => {
   if (!originalRequest.headers.get(ACCEPT_ENCODING)?.toLowerCase().includes(BROTLI)) return response;
