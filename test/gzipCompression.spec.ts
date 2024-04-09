@@ -116,6 +116,37 @@ describe('gzipCompression with intermediate Response', () => {
     expect(output.headers.get(VARY)).to.include(ACCEPT_ENCODING);
   });
 
+  it('should set Vary: Accept-Encoding if not present on intermediate Response even if gzip is not supported', async () => {
+    const request = new Request('https://example.com');
+    request.headers.delete(ACCEPT_ENCODING);
+
+    const input = new Response('Test Response');
+    input.headers.delete(VARY);
+
+    const output = await gzipCompression(input, request);
+
+    expect(output).toBeInstanceOf(Response);
+    expect(output).toBe(input);
+    expect(output.headers.get(CONTENT_ENCODING)).toBeNull();
+    expect(output.headers.get(VARY)).toStrictEqual(ACCEPT_ENCODING);
+  });
+
+  it('should append Accept-Encoding to Vary header if header already present on intermediate Response without Accept-Encoding even if gzip is not supported', async () => {
+    const request = new Request('https://example.com');
+    request.headers.delete(ACCEPT_ENCODING);
+
+    const input = new Response('Test Response');
+    input.headers.set(VARY, 'x-funky');
+
+    const output = await gzipCompression(input, request);
+
+    expect(output).toBeInstanceOf(Response);
+    expect(output).toBe(input);
+    expect(output.headers.get(CONTENT_ENCODING)).toBeNull();
+    expect(output.headers.get(VARY)).to.contain('x-funky');
+    expect(output.headers.get(VARY)).to.contain(ACCEPT_ENCODING);
+  });
+
   it('should fall back to status and status text of intermediate Response if neither is provided as options', async () => {
     const request = new Request('https://example.com');
     request.headers.set(ACCEPT_ENCODING, GZIP);

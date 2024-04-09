@@ -8,7 +8,12 @@ export const deflateCompression: Compression = async (
   originalRequest: Request,
   options?: ResponseInit,
 ): Promise<Response> => {
-  if (!originalRequest.headers.get(ACCEPT_ENCODING)?.toLowerCase().includes(DEFLATE)) return response;
+  if (!originalRequest.headers.get(ACCEPT_ENCODING)?.toLowerCase().includes(DEFLATE)) {
+    if (!(response.headers.get('Vary') ?? '').includes('Accept-Encoding')) {
+      response.headers.append('Vary', 'Accept-Encoding');
+    }
+    return response;
+  }
 
   return await handleCompression(DEFLATE, deflateWrapper, response, options);
 };
