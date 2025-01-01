@@ -25,7 +25,7 @@ export default [
       parser: typescriptEslint.parser,
       parserOptions: {
         projectService: {
-          allowDefaultProject: ['eslint.config.mjs'],
+          allowDefaultProject: ['eslint.config.mjs', 'rollup.config.mjs'],
         },
         tsconfigRootDir: import.meta.dirname,
       },

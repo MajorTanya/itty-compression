@@ -9,7 +9,7 @@ import nodeResolve from '@rollup/plugin-node-resolve';
 // scan files to build
 const files = (
   await globby('./src/*.ts', {
-    ignore: ['**/*.spec.ts', 'example', 'util'],
+    ignoreFiles: ['**/*.spec.ts', 'example', 'util'],
   })
 )
   .map((path) => ({
@@ -22,9 +22,13 @@ const files = (
   .sort((a, b) => (a.shortPath.toLowerCase() < b.shortPath.toLowerCase() ? -1 : 1));
 
 // read original package.json
+// can be suppressed because a package.json is a well known file that will exist
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const pkg = await fs.readJSON('./package.json');
 
 // create updated exports list from build files
+// can be suppressed because a package.json is a well known file that will exist
+// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 pkg.exports = files.reduce((acc, file) => {
   acc[file.shortPath] = {
     import: file.esm,
@@ -39,7 +43,7 @@ pkg.exports = files.reduce((acc, file) => {
 await fs.writeJSON('./package.json', pkg, { spaces: 2, EOL: '\r\n' });
 
 // noinspection JSUnusedGlobalSymbols
-export default async () => {
+export default () => {
   console.log(files.map((f) => f.path));
 
   return files.map((file) => ({
