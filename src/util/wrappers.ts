@@ -1,8 +1,18 @@
-import { brotliCompressSync, deflateSync, gzipSync, type InputType } from 'node:zlib';
+import {
+  brotliCompressSync,
+  type BrotliOptions,
+  deflateSync,
+  gzipSync,
+  type InputType,
+  type ZlibOptions,
+} from 'node:zlib';
 import { SUPPORTED_ENCODINGS } from './constants.js';
 import type { Compressor } from './types.js';
 
-const COMPRESSIONS: Record<(typeof SUPPORTED_ENCODINGS)[number], (input: InputType, options?: any) => Buffer> = {
+const COMPRESSIONS: Record<
+  (typeof SUPPORTED_ENCODINGS)[number],
+  (input: InputType, options?: BrotliOptions | ZlibOptions) => Buffer
+> = {
   br: brotliCompressSync,
   gzip: gzipSync,
   deflate: deflateSync,
