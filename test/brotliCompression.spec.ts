@@ -151,7 +151,6 @@ describe('brotliCompression with intermediate Response', () => {
     const request = new Request('https://example.com');
     request.headers.set(ACCEPT_ENCODING, BROTLI);
 
-    // eslint-disable-next-line quotes
     const input = new Response('Test Response', { status: 418, statusText: "I'm a teapot" });
 
     const output = await brotliCompression(input, request);
@@ -162,7 +161,6 @@ describe('brotliCompression with intermediate Response', () => {
     expect(output.status).toStrictEqual(input.status);
     expect(output.status).toStrictEqual(418);
     expect(output.statusText).toStrictEqual(input.statusText);
-    // eslint-disable-next-line quotes
     expect(output.statusText).toStrictEqual("I'm a teapot");
   });
 
@@ -170,7 +168,6 @@ describe('brotliCompression with intermediate Response', () => {
     const request = new Request('https://example.com');
     request.headers.set(ACCEPT_ENCODING, BROTLI);
 
-    // eslint-disable-next-line quotes
     const input = new Response('Test Response', { status: 418, statusText: "I'm a teapot" });
     const options = { status: 202, statusText: 'Accepted' };
 
@@ -204,7 +201,6 @@ describe('brotliCompression with intermediate Response', () => {
     const request = new Request('https://example.com');
     request.headers.set(ACCEPT_ENCODING, BROTLI);
 
-    // eslint-disable-next-line quotes
     const input = new Response(null, { status: 418, statusText: "I'm a teapot" });
 
     const options = { status: 202, statusText: 'Accepted' };

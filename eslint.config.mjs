@@ -34,12 +34,15 @@ export default [
     },
 
     rules: {
+      '@stylistic/arrow-parens': ['error', 'always'],
+      '@stylistic/comma-dangle': ['error', 'only-multiline'],
       '@stylistic/linebreak-style': ['error', 'unix'],
       '@stylistic/quotes': [
         'error',
         'single',
         {
           allowTemplateLiterals: true,
+          avoidEscape: true,
         },
       ],
       '@stylistic/semi': ['error', 'always'],

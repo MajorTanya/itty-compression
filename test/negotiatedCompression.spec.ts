@@ -196,7 +196,6 @@ describe('negotiatedCompression with intermediate Response', () => {
     const request = new Request('https://example.com');
     request.headers.set(ACCEPT_ENCODING, BROTLI);
 
-    // eslint-disable-next-line quotes
     const input = new Response('Test Response', { status: 418, statusText: "I'm a teapot" });
     const options = { status: 202, statusText: 'Accepted' };
 
@@ -230,7 +229,6 @@ describe('negotiatedCompression with intermediate Response', () => {
     const request = new Request('https://example.com');
     request.headers.set(ACCEPT_ENCODING, BROTLI);
 
-    // eslint-disable-next-line quotes
     const input = new Response(null, { status: 418, statusText: "I'm a teapot" });
 
     const options = { status: 202, statusText: 'Accepted' };
@@ -264,7 +262,6 @@ describe('negotiatedCompression with intermediate Response', () => {
     const request = new Request('https://example.com');
     request.headers.set(ACCEPT_ENCODING, GZIP);
 
-    // eslint-disable-next-line quotes
     const input = new Response(null, { status: 418, statusText: "I'm a teapot" });
 
     const options = { status: 202, statusText: 'Accepted' };
@@ -298,7 +295,6 @@ describe('negotiatedCompression with intermediate Response', () => {
     const request = new Request('https://example.com');
     request.headers.set(ACCEPT_ENCODING, DEFLATE);
 
-    // eslint-disable-next-line quotes
     const input = new Response(null, { status: 418, statusText: "I'm a teapot" });
 
     const options = { status: 202, statusText: 'Accepted' };
