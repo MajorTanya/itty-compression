@@ -18,13 +18,13 @@
     "noUncheckedIndexedAccess": true,
     "pretty": true,
     "resolveJsonModule": true,
-    "rootDir": "src",
+    "rootDir": "",
     "skipLibCheck": true,
     "strict": true,
     "sourceMap": true,
     "traceResolution": false,
     "module": "ESNext",
-    "outDir": "dist",
+    "outDir": "out",
     "target": "ESNext",
     "types": [
       "@types/node"
@@ -33,9 +33,10 @@
   "exclude": [
     "node_modules",
     "dist",
-    "**/*.spec.ts"
+    "out"
   ],
   "include": [
-    "src"
+    "src",
+    "test"
   ]
 }

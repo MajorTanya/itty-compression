@@ -17,7 +17,7 @@ const wrapper = async (
       ?.getReader()
       .read()
       .then((result) => {
-        return result?.value !== undefined ? COMPRESSIONS[algorithm](result.value) : null;
+        return result.value !== undefined ? COMPRESSIONS[algorithm](result.value) : null;
       })) ?? null
   );
 };

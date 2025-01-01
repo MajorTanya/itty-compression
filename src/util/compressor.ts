@@ -12,7 +12,7 @@ export const handleCompression = async (
   // do not double encode
   if (input.headers.get(CONTENT_ENCODING)) return input;
 
-  const { headers, ...optionsRest } = options || {};
+  const { headers, ...optionsRest } = options ?? {};
   const optionsHeaders = new Headers(headers);
   if (!optionsHeaders.get(VARY)?.includes(ACCEPT_ENCODING)) optionsHeaders.append(VARY, ACCEPT_ENCODING);
 
