@@ -7,7 +7,7 @@ import globals from 'globals';
 import typescriptEslint from 'typescript-eslint';
 
 export default [
-  stylistic.configs['recommended-flat'],
+  stylistic.configs.recommended,
   eslint.configs.recommended,
   ...typescriptEslint.configs.strictTypeChecked,
   ...typescriptEslint.configs.stylisticTypeChecked,
