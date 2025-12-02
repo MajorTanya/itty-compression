@@ -41,7 +41,7 @@ export default [
         'error',
         'single',
         {
-          allowTemplateLiterals: true,
+          allowTemplateLiterals: 'always',
           avoidEscape: true,
         },
       ],
