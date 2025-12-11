@@ -94,5 +94,10 @@
       "require": "./dist/negotiatedCompression.cjs",
       "types": "./dist/negotiatedCompression.d.ts"
     }
+  },
+  "overrides": {
+    "rollup-plugin-copy": {
+      "globby": "^11.1.0"
+    }
   }
 }
