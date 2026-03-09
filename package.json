@@ -36,7 +36,7 @@
   },
   "homepage": "https://github.com/MajorTanya/itty-compression#readme",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
