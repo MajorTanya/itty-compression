@@ -1,15 +1,11 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "allowSyntheticDefaultImports": true,
-    "baseUrl": "src",
     "declaration": true,
-    "esModuleInterop": true,
     "inlineSourceMap": false,
     "lib": [
       "ESNext",
       "DOM",
-      "DOM.Iterable"
     ],
     "listEmittedFiles": false,
     "listFiles": false,
@@ -18,7 +14,6 @@
     "noUncheckedIndexedAccess": true,
     "pretty": true,
     "resolveJsonModule": true,
-    "rootDir": "",
     "skipLibCheck": true,
     "strict": true,
     "sourceMap": true,
